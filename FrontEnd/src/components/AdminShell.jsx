@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import bookBankImage from "../assets/image.png";
 
@@ -10,9 +10,21 @@ const navItems = [
   { label: "Lent Books", path: "/LentBooks", icon: "↗" },
 ];
 
+const SIDEBAR_STORAGE_KEY = "book-bank-sidebar-open";
+
 function AdminShell({ title, subtitle, children }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    const savedState = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
+    return savedState === null ? true : savedState === "true";
+  });
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      SIDEBAR_STORAGE_KEY,
+      isSidebarOpen ? "true" : "false"
+    );
+  }, [isSidebarOpen]);
 
   return (
     <div className="min-h-screen bg-[#e7d9cb] text-[#2f231d]">
@@ -85,13 +97,13 @@ function AdminShell({ title, subtitle, children }) {
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-[1440px]">
+      <div className="mx-auto flex max-w-[1440px] items-start">
         <aside
-          className={`border-r border-[#ccb6a3] bg-[#ddcab7] transition-all duration-300 ${
+          className={`sticky top-[89px] h-[calc(100vh-89px)] shrink-0 overflow-y-auto border-r border-[#ccb6a3] bg-[#ddcab7] transition-all duration-300 ${
             isSidebarOpen ? "w-[250px]" : "w-[88px]"
           }`}
         >
-          <nav className="flex min-h-[calc(100vh-76px)] flex-col gap-3 px-3 py-6">
+          <nav className="flex min-h-full flex-col gap-3 px-3 py-6">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}

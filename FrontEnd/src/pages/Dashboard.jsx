@@ -134,6 +134,7 @@ function Dashboard() {
               >
                 Today
               </button>
+              <p>This tab is only temporary actual functionality will be implemented later.</p>
             </div>
 
             <div className="px-5 py-5">
