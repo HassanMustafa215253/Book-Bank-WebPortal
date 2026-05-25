@@ -1,103 +1,114 @@
-import bookBankImage from '../assets/image.png'
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import bookBankImage from "../assets/image.png";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Login() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  // ✅ correct declaration
   const valid_entry = {
     "123456": ["pass", "Inventory"],
-  }
+  };
 
-  // ✅ state for inputs
-  const [itsNumber, setItsNumber] = useState("")
-  const [password, setPassword] = useState("")
+  const [itsNumber, setItsNumber] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    // check if ITS exists
     if (valid_entry[itsNumber]) {
-      const [validPassword, route] = valid_entry[itsNumber]
+      const [validPassword, route] = valid_entry[itsNumber];
 
       if (password === validPassword) {
-        navigate(`/${route}`)
+        navigate(`/${route}`);
       } else {
-        alert("Wrong password")
+        alert("Wrong password");
       }
-
     } else {
-      alert("Invalid ITS number")
+      alert("Invalid ITS number");
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-[#f5efe6] flex items-center justify-center px-4">
-      <div className="w-full max-w-4xl bg-white shadow-xl rounded-2xl overflow-hidden grid md:grid-cols-2">
+    <div className="min-h-screen bg-[#f6efe7] relative overflow-hidden">
 
-        <div className="bg-[#6f4e37] text-white flex flex-col justify-center items-center p-10">
-          <img
-            src={bookBankImage}
-            alt="Book Bank"
-            className="w-40 mb-6"
-          />
+      <div className="absolute w-[500px] h-[500px] bg-[#6f4e37]/10 rounded-full blur-3xl top-[-120px] left-[-120px]" />
+      <div className="absolute w-[400px] h-[400px] bg-[#8b5e3c]/10 rounded-full blur-3xl bottom-[-120px] right-[-120px]" />
 
-          <h1 className="text-3xl font-bold text-center leading-snug">
+      <header className="px-10 pt-8 flex items-center gap-4">
+        <img src={bookBankImage} className="w-12 h-12" />
+        <div>
+          <h1 className="text-[#3b2a22] font-semibold text-lg">
             Tolobat Ul Kulliyaat Ul Muminoon
           </h1>
-
-          <p className="mt-3 text-lg tracking-wide text-[#f3e5d0]">
-            Book Bank Management
+          <p className="text-sm text-[#6f4e37]">
+            Book Bank Management System
           </p>
         </div>
+      </header>
 
-        <div className="flex flex-col justify-center p-8 md:p-12">
+      <main className="px-10 mt-20 grid grid-cols-12 gap-10">
 
-          <div className="space-y-5">
+        <section className="col-span-7 flex flex-col justify-center">
+          <h2 className="text-5xl font-bold text-[#3b2a22] leading-tight">
+            Access your
+            <br />
+            book records
+            <br />
+            instantly.
+          </h2>
 
-            {/* ITS input */}
+          <p className="mt-6 text-[#6f4e37] max-w-md">
+            A simple internal system for managing book bank distribution,
+            tracking, and inventory access for members.
+          </p>
+
+          <div className="mt-10 text-sm text-[#7a5a45] border-l-2 border-[#6f4e37] pl-4">
+            “Knowledge is not stored — it is accessed.”
+          </div>
+        </section>
+
+        <section className="col-span-5 relative">
+
+          <div className="sticky top-24 space-y-6">
+
             <div>
-              <label className="block text-sm font-medium text-[#5c4033] mb-2">
+              <label className="text-sm text-[#5c4033]">
                 ITS Number
               </label>
-
               <input
-                type="text"
-                placeholder="Enter your ITS"
                 value={itsNumber}
                 onChange={(e) => setItsNumber(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-[#d6c2b0] focus:outline-none focus:ring-2 focus:ring-[#8b5e3c]"
+                className="w-full mt-2 px-4 py-3 bg-white/70 backdrop-blur-md border border-[#dcc7b5] focus:outline-none focus:border-[#6f4e37]"
+                placeholder="Enter ITS"
               />
             </div>
 
-            {/* Password input */}
             <div>
-              <label className="block text-sm font-medium text-[#5c4033] mb-2">
+              <label className="text-sm text-[#5c4033]">
                 Password
               </label>
-
               <input
                 type="password"
-                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-[#d6c2b0] focus:outline-none focus:ring-2 focus:ring-[#8b5e3c]"
+                className="w-full mt-2 px-4 py-3 bg-white/70 backdrop-blur-md border border-[#dcc7b5] focus:outline-none focus:border-[#6f4e37]"
+                placeholder="Enter password"
               />
             </div>
 
             <button
-              className="w-full bg-[#6f4e37] hover:bg-[#5c4033] text-white py-3 rounded-lg font-medium transition duration-200"
               onClick={handleLogin}
+              className="w-full py-3 bg-[#6f4e37] text-white hover:bg-[#563a2c] transition"
             >
-              Login
+              Enter System
             </button>
 
+            <p className="text-xs text-[#7a5a45]">
+              Authorized access only
+            </p>
           </div>
-        </div>
-
-      </div>
+        </section>
+      </main>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
