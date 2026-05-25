@@ -1,3 +1,5 @@
+import bookBankImage from './assets/image.png'
+
 function App() {
   return (
     <div className="min-h-screen bg-[#f5efe6] flex items-center justify-center px-4">
@@ -5,7 +7,7 @@ function App() {
         
         <div className="bg-[#6f4e37] text-white flex flex-col justify-center items-center p-10">
           <img
-            src="./assets/image.png"
+            src={bookBankImage}
             alt="Book Bank"
             className="w-40 mb-6"
           />
