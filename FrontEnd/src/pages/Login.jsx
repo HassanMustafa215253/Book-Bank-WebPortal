@@ -6,7 +6,7 @@ function Login() {
   const navigate = useNavigate();
 
   const valid_entry = {
-    "123456": ["pass", "Inventory"],
+    "123456": ["pass", "Dashboard"],
   };
 
   const [itsNumber, setItsNumber] = useState("");
