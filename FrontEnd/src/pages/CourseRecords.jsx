@@ -38,8 +38,7 @@ function CourseRecords() {
   const [schools, setSchools] = useState(initialSchools);
   const [schoolForm, setSchoolForm] = useState(emptySchool);
   const [classForm, setClassForm] = useState(emptyClass);
-  const [isSchoolFormOpen, setIsSchoolFormOpen] = useState(false);
-  const [isClassFormOpen, setIsClassFormOpen] = useState(false);
+  const [isInputMode, setIsInputMode] = useState(false);
 
   const handleSchoolSubmit = (event) => {
     event.preventDefault();
@@ -53,7 +52,7 @@ function CourseRecords() {
       { id: Date.now(), name: schoolForm.name, classes: [] },
     ]);
     setSchoolForm(emptySchool);
-    setIsSchoolFormOpen(false);
+    setIsInputMode(false);
   };
 
   const handleClassSubmit = (event) => {
@@ -87,7 +86,7 @@ function CourseRecords() {
     );
 
     setClassForm(emptyClass);
-    setIsClassFormOpen(false);
+    setIsInputMode(false);
   };
 
   const removeSchool = (id) => {
@@ -109,181 +108,203 @@ function CourseRecords() {
     );
   };
 
+  const viewToggle = (
+    <button
+      type="button"
+      onClick={() => setIsInputMode((current) => !current)}
+      aria-pressed={isInputMode}
+      className="relative inline-flex h-14 w-full max-w-[15rem] items-center rounded-full border border-[var(--border)] bg-[var(--surface)] p-1 sm:w-[15rem]"
+    >
+      <span
+        className={`absolute h-12 w-[calc(50%-0.125rem)] rounded-full bg-[var(--primary)] transition-transform duration-300 ${
+          isInputMode ? "translate-x-[calc(100%-0.25rem)]" : "translate-x-0"
+        }`}
+      />
+      <span className={`relative z-10 flex-1 text-sm font-medium transition ${!isInputMode ? "text-white" : "text-[var(--text-muted)]"}`}>
+        Records
+      </span>
+      <span className={`relative z-10 flex-1 text-sm font-medium transition ${isInputMode ? "text-white" : "text-[var(--text-muted)]"}`}>
+        Input
+      </span>
+    </button>
+  );
+
   return (
     <AdminShell
       title="Course Records"
-      subtitle="Track schools, add classes only when needed, and store the courses attached to each class."
+      headerAction={viewToggle}
     >
-      <div className="border-b border-[#dccabd] bg-[#ecdacc] px-5 py-5 lg:px-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button
-            type="button"
-            onClick={() => setIsSchoolFormOpen((current) => !current)}
-            className="border border-[#6f4e37] bg-[#6f4e37] px-5 py-3 text-sm text-white transition hover:bg-[#5a3f31]"
-          >
-            {isSchoolFormOpen ? "Close Add School" : "Add School"}
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsClassFormOpen((current) => !current)}
-            className="border border-[#8b6a53] bg-[#f8ede2] px-5 py-3 text-sm text-[#5d4334] transition hover:bg-[#ecd8c8]"
-          >
-            {isClassFormOpen ? "Close Add Class" : "Add Class"}
-          </button>
-        </div>
-      </div>
-
-      {isSchoolFormOpen && (
-        <div className="border-b border-[#dccabd] bg-[#e6d2c1] px-5 py-5 lg:px-6">
-          <h2 className="font-serif text-2xl text-[#35251d]">Add School</h2>
-          <form onSubmit={handleSchoolSubmit} className="mt-5 flex flex-col gap-4 sm:flex-row">
-            <input
-              value={schoolForm.name}
-              onChange={(event) => setSchoolForm({ name: event.target.value })}
-              className="w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
-              placeholder="Enter school name"
-            />
-            <button
-              type="submit"
-              className="border border-[#6f4e37] bg-[#6f4e37] px-6 py-3 text-sm text-white transition hover:bg-[#5a3f31]"
-            >
-              Save School
-            </button>
-          </form>
-        </div>
-      )}
-
-      {isClassFormOpen && (
-        <div className="border-b border-[#dccabd] bg-[#dfcab8] px-5 py-5 lg:px-6">
-          <h2 className="font-serif text-2xl text-[#35251d]">Add Class Record</h2>
-          <form onSubmit={handleClassSubmit} className="mt-5 grid gap-4 lg:grid-cols-2">
-            <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="schoolId">
-                School
-              </label>
-              <select
-                id="schoolId"
-                value={classForm.schoolId}
-                onChange={(event) =>
-                  setClassForm((current) => ({
-                    ...current,
-                    schoolId: event.target.value,
-                  }))
-                }
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+      {isInputMode ? (
+        <div className="grid gap-6 bg-[var(--surface-muted)] px-5 py-6 lg:grid-cols-2 lg:px-7">
+          <section className="rounded-3xl border border-[var(--border)] bg-white px-5 py-6">
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+                Add School
+              </h3>
+              <button
+                type="button"
+                onClick={() => setSchoolForm(emptySchool)}
+                className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:bg-white"
               >
-                <option value="">Select school</option>
-                {schools.map((school) => (
-                  <option key={school.id} value={school.id}>
-                    {school.name}
-                  </option>
-                ))}
-              </select>
+                Clear
+              </button>
             </div>
-
-            <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="className">
-                Class
-              </label>
+            <form onSubmit={handleSchoolSubmit} className="mt-5 flex flex-col gap-4">
               <input
-                id="className"
-                value={classForm.className}
-                onChange={(event) =>
-                  setClassForm((current) => ({
-                    ...current,
-                    className: event.target.value,
-                  }))
-                }
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
-                placeholder="Enter class"
+                value={schoolForm.name}
+                onChange={(event) => setSchoolForm({ name: event.target.value })}
+                className="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                placeholder="Enter school name"
               />
-            </div>
-
-            <div className="lg:col-span-2">
-              <label className="text-sm text-[#5b4132]" htmlFor="courses">
-                Courses
-              </label>
-              <textarea
-                id="courses"
-                value={classForm.courses}
-                onChange={(event) =>
-                  setClassForm((current) => ({
-                    ...current,
-                    courses: event.target.value,
-                  }))
-                }
-                rows="3"
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
-                placeholder="Enter courses separated by commas"
-              />
-            </div>
-
-            <div className="lg:col-span-2 flex justify-end">
               <button
                 type="submit"
-                className="border border-[#6f4e37] bg-[#6f4e37] px-6 py-3 text-sm text-white transition hover:bg-[#5a3f31]"
+                className="self-end rounded-2xl bg-[var(--primary)] px-6 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-strong)]"
+              >
+                Save School
+              </button>
+            </form>
+          </section>
+
+          <section className="rounded-3xl border border-[var(--border)] bg-white px-5 py-6">
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+                Add Class Record
+              </h3>
+              <button
+                type="button"
+                onClick={() => setClassForm(emptyClass)}
+                className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:bg-white"
+              >
+                Clear
+              </button>
+            </div>
+            <form onSubmit={handleClassSubmit} className="mt-5 grid gap-4">
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="schoolId">
+                  School
+                </label>
+                <select
+                  id="schoolId"
+                  value={classForm.schoolId}
+                  onChange={(event) =>
+                    setClassForm((current) => ({
+                      ...current,
+                      schoolId: event.target.value,
+                    }))
+                  }
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                >
+                  <option value="">Select school</option>
+                  {schools.map((school) => (
+                    <option key={school.id} value={school.id}>
+                      {school.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="className">
+                  Class
+                </label>
+                <input
+                  id="className"
+                  value={classForm.className}
+                  onChange={(event) =>
+                    setClassForm((current) => ({
+                      ...current,
+                      className: event.target.value,
+                    }))
+                  }
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter class"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="courses">
+                  Courses
+                </label>
+                <textarea
+                  id="courses"
+                  value={classForm.courses}
+                  onChange={(event) =>
+                    setClassForm((current) => ({
+                      ...current,
+                      courses: event.target.value,
+                    }))
+                  }
+                  rows="4"
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter courses separated by commas"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="justify-self-end rounded-2xl bg-[var(--primary)] px-6 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-strong)]"
               >
                 Save Class Record
               </button>
-            </div>
-          </form>
+            </form>
+          </section>
+        </div>
+      ) : (
+        <div className="space-y-5 bg-[var(--surface-muted)] px-5 py-5 lg:px-7">
+          {schools.map((school) => (
+            <article
+              key={school.id}
+              className="rounded-3xl border border-[var(--border)] bg-white shadow-sm"
+            >
+              <div className="flex flex-col gap-3 border-b border-[var(--border)] bg-[var(--surface-muted)] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">{school.name}</h2>
+                <button
+                  type="button"
+                  onClick={() => removeSchool(school.id)}
+                  className="rounded-2xl border border-[rgba(166,61,53,0.22)] bg-[var(--danger-soft)] px-4 py-2 text-sm font-medium text-[var(--danger)] transition hover:bg-[#ffe7e5]"
+                >
+                  Remove School
+                </button>
+              </div>
+
+              <div className="space-y-4 px-5 py-5">
+                {school.classes.length === 0 ? (
+                  <p className="text-sm text-[var(--text-muted)]">
+                    No classes added yet for this school.
+                  </p>
+                ) : (
+                  school.classes.map((classEntry) => (
+                    <div
+                      key={classEntry.id}
+                      className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] p-4"
+                    >
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <p className="font-semibold text-[var(--text)]">
+                            {classEntry.className}
+                          </p>
+                          <p className="mt-1 text-sm leading-6 text-[var(--text-muted)]">
+                            {classEntry.courses.length > 0
+                              ? classEntry.courses.join(", ")
+                              : "No courses recorded"}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeClass(school.id, classEntry.id)}
+                          className="rounded-2xl border border-[var(--border)] bg-white px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--surface-muted)]"
+                        >
+                          Remove Class
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </article>
+          ))}
         </div>
       )}
-
-      <div className="space-y-5 bg-[#fdf7f0] px-5 py-5 lg:px-6">
-        {schools.map((school) => (
-          <article
-            key={school.id}
-            className="border border-[#d8c4b4] bg-[#fff8f1] shadow-sm"
-          >
-            <div className="flex flex-col gap-3 border-b border-[#e6d7ca] bg-[#f2e3d5] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="font-serif text-2xl text-[#35251d]">{school.name}</h2>
-              <button
-                type="button"
-                onClick={() => removeSchool(school.id)}
-                className="border border-[#c8917b] bg-[#fff4ef] px-4 py-2 text-sm text-[#8a3c2f] transition hover:bg-[#f2d8cf]"
-              >
-                Remove School
-              </button>
-            </div>
-
-            <div className="space-y-4 px-5 py-5">
-              {school.classes.length === 0 ? (
-                <p className="text-sm text-[#7b5d49]">
-                  No classes added yet for this school.
-                </p>
-              ) : (
-                school.classes.map((classEntry) => (
-                  <div
-                    key={classEntry.id}
-                    className="border border-[#e1d0c2] bg-[#fbf3ea] p-4"
-                  >
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                      <div>
-                        <p className="font-medium text-[#35251d]">
-                          {classEntry.className}
-                        </p>
-                        <p className="mt-1 text-sm text-[#6d4e3d]">
-                          {classEntry.courses.length > 0
-                            ? classEntry.courses.join(", ")
-                            : "No courses recorded"}
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => removeClass(school.id, classEntry.id)}
-                        className="border border-[#bca18c] bg-[#f8ede2] px-4 py-2 text-sm text-[#5d4334] transition hover:bg-[#ecd8c8]"
-                      >
-                        Remove Class
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
     </AdminShell>
   );
 }

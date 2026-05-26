@@ -6,61 +6,57 @@ const statCards = [
   {
     label: "Books in inventory",
     value: "248",
-    note: "18 titles recently updated",
-    accent: "from-[#7d5943] to-[#5c3e2f]",
+    note: "18 titles reviewed this month",
   },
   {
     label: "Active receivers",
     value: "91",
-    note: "12 new registrations this month",
-    accent: "from-[#a06c4d] to-[#7c5238]",
+    note: "12 recently registered",
   },
   {
-    label: "Classes with course maps",
+    label: "Classes mapped",
     value: "26",
     note: "Across 7 schools",
-    accent: "from-[#6b7b55] to-[#52613e]",
   },
   {
-    label: "Books currently lent",
+    label: "Books on loan",
     value: "73",
-    note: "9 due back this week",
-    accent: "from-[#8a4f43] to-[#69352b]",
+    note: "9 due this week",
   },
 ];
 
 const focusPanels = {
   overview: {
-    title: "System health",
+    title: "Operational overview",
     points: [
-      "Inventory records are stable, with most updates concentrated in science and language subjects.",
-      "Receiver registrations are growing steadily, especially in middle school classes.",
-      "Course records still need mapping for a few senior classes before lending season peaks.",
+      "Inventory updates remain concentrated in science and language collections.",
+      "Receiver registrations are increasing steadily across middle school classes.",
+      "A small number of senior classes still need complete course mapping.",
     ],
   },
   action: {
-    title: "Needs action",
+    title: "Priority actions",
     points: [
-      "Physics and Urdu sets have the highest lending pressure right now.",
-      "Three schools still need class-wise course records completed.",
-      "Several lent books are nearing due date and should be reviewed soon.",
+      "Physics and Urdu sets are showing the highest lending pressure this week.",
+      "Three schools still require class-level course records before the next cycle.",
+      "Several loan records are approaching due date and should be reviewed.",
     ],
   },
   today: {
-    title: "Today's pulse",
+    title: "Today's activity",
     points: [
-      "4 new books were added to the register.",
-      "2 receiver records were updated with extra book requests.",
-      "6 lent-book records were checked and aligned with due dates.",
+      "4 new books were added to the central register.",
+      "2 receiver records were updated with additional requests.",
+      "6 loan records were checked and aligned with due dates.",
     ],
   },
 };
 
 const quickLinks = [
-  { label: "Add book", to: "/Inventory", tone: "bg-[#6f4e37] text-white" },
-  { label: "Register receiver", to: "/Receivers", tone: "bg-[#f3e1d1] text-[#5d4334]" },
-  { label: "Map class courses", to: "/CourseRecords", tone: "bg-[#e6efe0] text-[#445338]" },
-  { label: "Record lending", to: "/LentBooks", tone: "bg-[#f7ddd6] text-[#7f3f34]" },
+  { label: "Add book", to: "/Inventory" },
+  { label: "Register receiver", to: "/Receivers" },
+  { label: "Map class courses", to: "/CourseRecords" },
+  { label: "Record lending", to: "/LentBooks" },
 ];
 
 const dueSoon = [
@@ -75,77 +71,65 @@ const lowStock = [
   { title: "Computer Basics", remaining: 4 },
 ];
 
+const panelTabs = [
+  { key: "overview", label: "Overview" },
+  { key: "action", label: "Needs Action" },
+  { key: "today", label: "Today" },
+];
+
 function Dashboard() {
   const [activePanel, setActivePanel] = useState("overview");
 
   return (
-    <AdminShell title="Dashboard">
-      <div className="bg-[#f6eee6] px-5 py-5 lg:px-6">
+    <AdminShell title="Dashboard" >
+      <div className="bg-[var(--surface)] px-5 py-6 lg:px-7">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {statCards.map((card) => (
             <article
               key={card.label}
-              className={`overflow-hidden rounded-none bg-gradient-to-br ${card.accent} p-[1px] shadow-sm`}
+              className="rounded-3xl border border-[var(--border)] bg-[var(--surface-muted)] px-5 py-5"
             >
-              <div className="h-full bg-[#f9f1e8] px-5 py-5">
-                <p className="text-sm text-[#7b5d49]">{card.label}</p>
-                <p className="mt-3 font-serif text-4xl text-[#2f231d]">{card.value}</p>
-                <p className="mt-2 text-sm text-[#6b5142]">{card.note}</p>
-              </div>
+              <p className="text-sm font-medium text-[var(--text-muted)]">{card.label}</p>
+              <p className="mt-4 text-4xl font-semibold tracking-[-0.03em] text-[var(--text)]">
+                {card.value}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">{card.note}</p>
             </article>
           ))}
         </div>
       </div>
 
-      <div className="grid gap-6 bg-[#fdf7f0] px-5 py-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-6">
+      <div className="grid gap-6 bg-[var(--surface-muted)] px-5 py-6 lg:grid-cols-[1.25fr_0.75fr] lg:px-7">
         <div className="space-y-6">
-          <section className="border border-[#d8c4b4] bg-[#fff8f1]">
-            <div className="flex flex-wrap gap-3 border-b border-[#e2d2c5] bg-[#ecdacc] px-4 py-4">
-              <button
-                type="button"
-                onClick={() => setActivePanel("overview")}
-                className={`px-4 py-2 text-sm transition ${
-                  activePanel === "overview"
-                    ? "bg-[#6f4e37] text-white"
-                    : "bg-[#f8ede2] text-[#5d4334]"
-                }`}
-              >
-                Overview
-              </button>
-              <button
-                type="button"
-                onClick={() => setActivePanel("action")}
-                className={`px-4 py-2 text-sm transition ${
-                  activePanel === "action"
-                    ? "bg-[#8a4f43] text-white"
-                    : "bg-[#f8ede2] text-[#5d4334]"
-                }`}
-              >
-                Needs Action
-              </button>
-              <button
-                type="button"
-                onClick={() => setActivePanel("today")}
-                className={`px-4 py-2 text-sm transition ${
-                  activePanel === "today"
-                    ? "bg-[#6b7b55] text-white"
-                    : "bg-[#f8ede2] text-[#5d4334]"
-                }`}
-              >
-                Today
-              </button>
-              <p>This tab is only temporary actual functionality will be implemented later.</p>
+          <section className="rounded-3xl border border-[var(--border)] bg-white">
+            <div className="border-b border-[var(--border)] px-5 py-5">
+              <div className="flex flex-wrap gap-3">
+                {panelTabs.map((tab) => (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    onClick={() => setActivePanel(tab.key)}
+                    className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                      activePanel === tab.key
+                        ? "bg-[var(--primary)] text-white"
+                        : "bg-[var(--surface-muted)] text-[var(--text-muted)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)]"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="px-5 py-5">
-              <h2 className="font-serif text-2xl text-[#31231b]">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
                 {focusPanels[activePanel].title}
               </h2>
-              <div className="mt-4 space-y-3">
+              <div className="mt-5 space-y-3">
                 {focusPanels[activePanel].points.map((point) => (
                   <div
                     key={point}
-                    className="border border-[#eadcd0] bg-[#fbf3ea] px-4 py-4 text-sm leading-6 text-[#5f4537]"
+                    className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-4 text-sm leading-7 text-[var(--text-muted)]"
                   >
                     {point}
                   </div>
@@ -154,16 +138,18 @@ function Dashboard() {
             </div>
           </section>
 
-          <section className="border border-[#d8c4b4] bg-[#fff8f1]">
-            <div className="border-b border-[#e2d2c5] bg-[#ecdacc] px-5 py-4">
-              <h2 className="font-serif text-2xl text-[#31231b]">Quick actions</h2>
+          <section className="rounded-3xl border border-[var(--border)] bg-white">
+            <div className="border-b border-[var(--border)] px-5 py-4">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+                Quick actions
+              </h2>
             </div>
             <div className="grid gap-3 px-5 py-5 sm:grid-cols-2">
               {quickLinks.map((link) => (
                 <Link
                   key={link.label}
                   to={link.to}
-                  className={`border border-[#ccb6a3] px-4 py-4 text-sm transition hover:opacity-90 ${link.tone}`}
+                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-4 text-sm font-medium text-[var(--text)] transition hover:border-[var(--border-strong)] hover:bg-white"
                 >
                   {link.label}
                 </Link>
@@ -173,19 +159,21 @@ function Dashboard() {
         </div>
 
         <div className="space-y-6">
-          <section className="border border-[#d8c4b4] bg-[#fff8f1]">
-            <div className="border-b border-[#e2d2c5] bg-[#ecdacc] px-5 py-4">
-              <h2 className="font-serif text-2xl text-[#31231b]">Due soon</h2>
+          <section className="rounded-3xl border border-[var(--border)] bg-white">
+            <div className="border-b border-[var(--border)] px-5 py-4">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+                Due soon
+              </h2>
             </div>
             <div className="space-y-3 px-5 py-5">
               {dueSoon.map((item) => (
                 <div
                   key={`${item.book}-${item.receiver}`}
-                  className="border border-[#eadcd0] bg-[#fbf3ea] px-4 py-4"
+                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-4"
                 >
-                  <p className="font-medium text-[#35251d]">{item.book}</p>
-                  <p className="mt-1 text-sm text-[#6a5041]">{item.receiver}</p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[#8a5f4e]">
+                  <p className="font-semibold text-[var(--text)]">{item.book}</p>
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">{item.receiver}</p>
+                  <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">
                     Due in {item.due}
                   </p>
                 </div>
@@ -193,20 +181,22 @@ function Dashboard() {
             </div>
           </section>
 
-          <section className="border border-[#d8c4b4] bg-[#fff8f1]">
-            <div className="border-b border-[#e2d2c5] bg-[#ecdacc] px-5 py-4">
-              <h2 className="font-serif text-2xl text-[#31231b]">Low stock watch</h2>
+          <section className="rounded-3xl border border-[var(--border)] bg-white">
+            <div className="border-b border-[var(--border)] px-5 py-4">
+              <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+                Low stock watch
+              </h2>
             </div>
-            <div className="space-y-4 px-5 py-5">
+            <div className="space-y-5 px-5 py-5">
               {lowStock.map((item) => (
                 <div key={item.title}>
                   <div className="flex items-center justify-between gap-4">
-                    <p className="text-sm text-[#35251d]">{item.title}</p>
-                    <p className="text-sm text-[#7b5d49]">{item.remaining} left</p>
+                    <p className="text-sm font-medium text-[var(--text)]">{item.title}</p>
+                    <p className="text-sm text-[var(--text-muted)]">{item.remaining} left</p>
                   </div>
-                  <div className="mt-2 h-2 bg-[#e8dbcf]">
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--bg-accent)]">
                     <div
-                      className="h-full bg-[#8a4f43]"
+                      className="h-full rounded-full bg-[var(--primary)]"
                       style={{ width: `${Math.min(item.remaining * 20, 100)}%` }}
                     />
                   </div>

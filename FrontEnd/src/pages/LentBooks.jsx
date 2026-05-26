@@ -44,7 +44,7 @@ function LentBooks() {
   const [lentBooks, setLentBooks] = useState(initialLentBooks);
   const [form, setForm] = useState(emptyLentBook);
   const [editingId, setEditingId] = useState(null);
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isInputMode, setIsInputMode] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -57,7 +57,7 @@ function LentBooks() {
   const resetForm = () => {
     setForm(emptyLentBook);
     setEditingId(null);
-    setIsFormOpen(false);
+    setIsInputMode(false);
   };
 
   const handleSubmit = (event) => {
@@ -91,7 +91,7 @@ function LentBooks() {
   const handleEdit = (entry) => {
     setForm(entry);
     setEditingId(entry.id);
-    setIsFormOpen(true);
+    setIsInputMode(true);
   };
 
   const handleRemove = (id) => {
@@ -102,37 +102,46 @@ function LentBooks() {
     }
   };
 
+  const viewToggle = (
+    <button
+      type="button"
+      onClick={() =>
+        isInputMode
+          ? resetForm()
+          : (setForm(emptyLentBook), setEditingId(null), setIsInputMode(true))
+      }
+      aria-pressed={isInputMode}
+      className="relative inline-flex h-14 w-full max-w-[15rem] items-center rounded-full border border-[var(--border)] bg-[var(--surface)] p-1 sm:w-[15rem]"
+    >
+      <span
+        className={`absolute  h-12 w-[calc(50%-0.125rem)] rounded-full bg-[var(--primary)] transition-transform duration-300 ${
+          isInputMode ? "translate-x-[calc(100%-0.25rem)]" : "translate-x-0"
+        }`}
+      />
+      <span className={`relative z-10 flex-1 text-sm font-medium transition ${!isInputMode ? "text-white" : "text-[var(--text-muted)]"}`}>
+        Records
+      </span>
+      <span className={`relative z-10 flex-1 text-sm font-medium transition ${isInputMode ? "text-white" : "text-[var(--text-muted)]"}`}>
+        Input
+      </span>
+    </button>
+  );
+
   return (
     <AdminShell
       title="Lent Books"
-      subtitle="Track the books that have been lent out to receivers and maintain their lending records."
+      headerAction={viewToggle}
     >
-      <div className="flex flex-col gap-4 border-b border-[#dccabd] bg-[#ecdacc] px-5 py-5 sm:flex-row sm:items-center sm:justify-end lg:px-6">
-        <button
-          type="button"
-          onClick={() =>
-            isFormOpen && editingId === null
-              ? setIsFormOpen(false)
-              : (setForm(emptyLentBook), setEditingId(null), setIsFormOpen(true))
-          }
-          className="border border-[#6f4e37] bg-[#6f4e37] px-5 py-3 text-sm text-white transition hover:bg-[#5a3f31]"
-        >
-          {isFormOpen && editingId === null
-            ? "Close Lent Record"
-            : "Add Lent Record"}
-        </button>
-      </div>
-
-      {isFormOpen && (
-        <div className="border-b border-[#dccabd] bg-[#e6d2c1] px-5 py-5 lg:px-6">
+      {isInputMode ? (
+        <div className="border-b border-[var(--border)] bg-white px-5 py-6 lg:px-7">
           <div className="mb-5 flex items-center justify-between gap-4">
-            <h2 className="font-serif text-2xl text-[#35251d]">
+            <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
               {editingId !== null ? "Update Lent Record" : "Add Lent Record"}
             </h2>
             <button
               type="button"
               onClick={resetForm}
-              className="border border-[#bca18c] bg-[#fff8f1] px-4 py-2 text-sm text-[#5d4334] transition hover:bg-[#efdece]"
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:bg-white"
             >
               Cancel
             </button>
@@ -140,7 +149,7 @@ function LentBooks() {
 
           <form onSubmit={handleSubmit} className="grid gap-4 lg:grid-cols-2">
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="receiverName">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="receiverName">
                 Receiver Name
               </label>
               <input
@@ -148,13 +157,13 @@ function LentBooks() {
                 name="receiverName"
                 value={form.receiverName}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter receiver name"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="its">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="its">
                 ITS
               </label>
               <input
@@ -162,13 +171,13 @@ function LentBooks() {
                 name="its"
                 value={form.its}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter ITS number"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="school">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="school">
                 School
               </label>
               <input
@@ -176,13 +185,13 @@ function LentBooks() {
                 name="school"
                 value={form.school}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter school"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="className">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="className">
                 Class
               </label>
               <input
@@ -190,13 +199,13 @@ function LentBooks() {
                 name="className"
                 value={form.className}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter class"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="subject">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="subject">
                 Subject
               </label>
               <input
@@ -204,13 +213,13 @@ function LentBooks() {
                 name="subject"
                 value={form.subject}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter subject"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="bookTitle">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="bookTitle">
                 Book Title
               </label>
               <input
@@ -218,13 +227,13 @@ function LentBooks() {
                 name="bookTitle"
                 value={form.bookTitle}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter book title"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="iban">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="iban">
                 IBAN
               </label>
               <input
@@ -232,13 +241,13 @@ function LentBooks() {
                 name="iban"
                 value={form.iban}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter IBAN"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="issueDate">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="issueDate">
                 Issue Date
               </label>
               <input
@@ -247,12 +256,12 @@ function LentBooks() {
                 type="date"
                 value={form.issueDate}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5b4132]" htmlFor="dueDate">
+              <label className="text-sm font-medium text-[var(--text)]" htmlFor="dueDate">
                 Due Date
               </label>
               <input
@@ -261,76 +270,76 @@ function LentBooks() {
                 type="date"
                 value={form.dueDate}
                 onChange={handleChange}
-                className="mt-2 w-full border border-[#c7ad99] bg-[#fff8f1] px-4 py-3 outline-none transition focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
               />
             </div>
 
             <div className="lg:col-span-2 flex justify-end">
               <button
                 type="submit"
-                className="border border-[#6f4e37] bg-[#6f4e37] px-6 py-3 text-sm text-white transition hover:bg-[#5a3f31]"
+                className="rounded-2xl bg-[var(--primary)] px-6 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-strong)]"
               >
                 {editingId !== null ? "Save Changes" : "Add Record"}
               </button>
             </div>
           </form>
         </div>
-      )}
-
-      <div className="overflow-x-auto bg-[#fdf7f0]">
-        <table className="min-w-full border-collapse">
-          <thead className="bg-[#e4cfbc]">
-            <tr className="text-left text-sm text-[#6d4e3d]">
-              <th className="px-5 py-4 font-medium lg:px-6">Receiver</th>
-              <th className="px-5 py-4 font-medium lg:px-6">ITS</th>
-              <th className="px-5 py-4 font-medium lg:px-6">School</th>
-              <th className="px-5 py-4 font-medium lg:px-6">Class</th>
-              <th className="px-5 py-4 font-medium lg:px-6">Subject</th>
-              <th className="px-5 py-4 font-medium lg:px-6">Book</th>
-              <th className="px-5 py-4 font-medium lg:px-6">IBAN</th>
-              <th className="px-5 py-4 font-medium lg:px-6">Issued</th>
-              <th className="px-5 py-4 font-medium lg:px-6">Due</th>
-              <th className="px-5 py-4 font-medium lg:px-6">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {lentBooks.map((entry) => (
-              <tr
-                key={entry.id}
-                className="border-t border-[#e0cebf] bg-[#fff9f3] align-top even:bg-[#f5e9dd]"
-              >
-                <td className="px-5 py-4 lg:px-6">{entry.receiverName}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.its}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.school}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.className}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.subject}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.bookTitle}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.iban}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.issueDate || "-"}</td>
-                <td className="px-5 py-4 lg:px-6">{entry.dueDate || "-"}</td>
-                <td className="px-5 py-4 lg:px-6">
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleEdit(entry)}
-                      className="border border-[#bca18c] bg-[#f8ede2] px-4 py-2 text-sm text-[#5d4334] transition hover:bg-[#ecd8c8]"
-                    >
-                      Update
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleRemove(entry.id)}
-                      className="border border-[#c8917b] bg-[#fff4ef] px-4 py-2 text-sm text-[#8a3c2f] transition hover:bg-[#f2d8cf]"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </td>
+      ) : (
+        <div className="overflow-x-auto bg-white">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-[var(--surface-strong)]">
+              <tr className="text-left text-sm text-[var(--text-muted)]">
+                <th className="px-5 py-4 font-semibold lg:px-7">Receiver</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">ITS</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">School</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">Class</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">Subject</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">Book</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">IBAN</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">Issued</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">Due</th>
+                <th className="px-5 py-4 font-semibold lg:px-7">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {lentBooks.map((entry) => (
+                <tr
+                  key={entry.id}
+                  className="border-t border-[var(--border)] align-top even:bg-[var(--surface-muted)]"
+                >
+                  <td className="px-5 py-4 font-medium text-[var(--text)] lg:px-7">{entry.receiverName}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.its}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.school}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.className}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.subject}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.bookTitle}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.iban}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.issueDate || "-"}</td>
+                  <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{entry.dueDate || "-"}</td>
+                  <td className="px-5 py-4 lg:px-7">
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(entry)}
+                        className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-white"
+                      >
+                        Update
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleRemove(entry.id)}
+                        className="rounded-2xl border border-[rgba(166,61,53,0.22)] bg-[var(--danger-soft)] px-4 py-2 text-sm font-medium text-[var(--danger)] transition hover:bg-[#ffe7e5]"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </AdminShell>
   );
 }

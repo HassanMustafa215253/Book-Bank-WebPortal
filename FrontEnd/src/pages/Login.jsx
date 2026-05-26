@@ -26,26 +26,28 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f6efe7] relative overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--bg)] text-[var(--text)]">
+      <div className="absolute left-[-120px] top-[-120px] h-[500px] w-[500px] rounded-full bg-[var(--primary)]/10 blur-3xl" />
+      <div className="absolute bottom-[-120px] right-[-120px] h-[400px] w-[400px] rounded-full bg-[var(--primary-strong)]/10 blur-3xl" />
 
-      <div className="absolute w-[500px] h-[500px] bg-[#6f4e37]/10 rounded-full blur-3xl top-[-120px] left-[-120px]" />
-      <div className="absolute w-[400px] h-[400px] bg-[#8b5e3c]/10 rounded-full blur-3xl bottom-[-120px] right-[-120px]" />
-
-      <header className="px-10 pt-8 flex items-center gap-4">
+      <header className="relative z-10 flex items-center gap-4 px-6 pt-8 sm:px-10">
         <div>
-          <h1 className="text-[#3b2a22] font-semibold text-lg">
+          <h1 className="text-lg font-semibold tracking-[0.01em] text-[var(--text)]">
             Northgate Collegiate
           </h1>
-          <p className="text-sm text-[#6f4e37]">
+          <p className="text-sm text-[var(--text-muted)]">
             Book Bank Management System
           </p>
         </div>
       </header>
 
-      <main className="px-10 mt-20 grid grid-cols-12 gap-10">
+      <main className="relative z-10 mt-16 grid gap-12 px-6 pb-10 sm:px-10 lg:mt-20 lg:grid-cols-12 lg:gap-10">
+        <section className="flex flex-col justify-center lg:col-span-7">
+          <div className="inline-flex w-fit rounded-full border border-[var(--border)] bg-[var(--surface)]/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--primary)] backdrop-blur">
+            Internal Portal
+          </div>
 
-        <section className="col-span-7 flex flex-col justify-center">
-          <h2 className="text-5xl font-bold text-[#3b2a22] leading-tight">
+          <h2 className="mt-8 text-4xl font-semibold leading-tight tracking-[-0.02em] text-[var(--text)] sm:text-5xl">
             Access your
             <br />
             book records
@@ -53,53 +55,60 @@ function Login() {
             instantly.
           </h2>
 
-          <p className="mt-6 text-[#6f4e37] max-w-md">
+          <p className="mt-6 max-w-md text-base leading-8 text-[var(--text-muted)]">
             A simple internal system for managing book bank distribution,
             tracking, and inventory access for members.
           </p>
 
-          <div className="mt-10 text-sm text-[#7a5a45] border-l-2 border-[#6f4e37] pl-4">
-            “Knowledge is not stored — it is accessed.”
+          <div className="mt-10 max-w-md border-l-2 border-[var(--primary)] pl-4 text-sm leading-7 text-[var(--text-muted)]">
+            "Knowledge is not stored, it is accessed."
           </div>
         </section>
 
-        <section className="col-span-5 relative">
-
-          <div className="sticky top-24 space-y-6">
+        <section className="lg:col-span-5">
+          <div className="space-y-6 rounded-[30px] border border-[var(--border)] bg-[var(--surface)]/88 p-7 shadow-[var(--shadow-soft)] backdrop-blur sm:p-8 lg:sticky lg:top-24">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                Sign In
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
+                Continue to the admin workspace
+              </h3>
+            </div>
 
             <div>
-              <label className="text-sm text-[#5c4033]">
+              <label className="text-sm font-medium text-[var(--text)]">
                 ITS Number
               </label>
               <input
                 value={itsNumber}
                 onChange={(e) => setItsNumber(e.target.value)}
-                className="w-full mt-2 px-4 py-3 bg-white/70 backdrop-blur-md border border-[#dcc7b5] focus:outline-none focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter ITS"
               />
             </div>
 
             <div>
-              <label className="text-sm text-[#5c4033]">
+              <label className="text-sm font-medium text-[var(--text)]">
                 Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full mt-2 px-4 py-3 bg-white/70 backdrop-blur-md border border-[#dcc7b5] focus:outline-none focus:border-[#6f4e37]"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--primary)] focus:bg-white"
                 placeholder="Enter password"
               />
             </div>
 
             <button
               onClick={handleLogin}
-              className="w-full py-3 bg-[#6f4e37] text-white hover:bg-[#563a2c] transition"
+              className="w-full rounded-2xl bg-[var(--primary)] py-3 font-medium text-white transition hover:bg-[var(--primary-strong)]"
             >
               Enter System
             </button>
 
-            <p className="text-xs text-[#7a5a45]">
+            <p className="text-xs uppercase tracking-[0.16em] text-[var(--text-muted)]">
               Authorized access only
             </p>
           </div>
