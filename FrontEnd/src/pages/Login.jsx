@@ -1,4 +1,3 @@
-import bookBankImage from "../assets/image.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -33,10 +32,9 @@ function Login() {
       <div className="absolute w-[400px] h-[400px] bg-[#8b5e3c]/10 rounded-full blur-3xl bottom-[-120px] right-[-120px]" />
 
       <header className="px-10 pt-8 flex items-center gap-4">
-        <img src={bookBankImage} className="w-12 h-12" />
         <div>
           <h1 className="text-[#3b2a22] font-semibold text-lg">
-            Tolobat Ul Kulliyaat Ul Muminoon
+            Northgate Collegiate
           </h1>
           <p className="text-sm text-[#6f4e37]">
             Book Bank Management System

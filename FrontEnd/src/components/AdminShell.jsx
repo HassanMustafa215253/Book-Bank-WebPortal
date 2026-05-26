@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import bookBankImage from "../assets/image.png";
 
 const navItems = [
   { label: "Dashboard", path: "/Dashboard", icon: "⌂" },
@@ -45,17 +44,12 @@ function AdminShell({ title, subtitle, children }) {
             </button>
 
             <div className="flex items-center gap-3">
-              <img
-                src={bookBankImage}
-                alt="Book Bank logo"
-                className="h-14 w-14 shrink-0 rounded-full border border-[#c7af9a] bg-[#fff8f1] object-cover p-1 shadow-sm"
-              />
               <div>
                 <p className="font-serif text-2xl leading-none text-[#3b2a22]">
-                  Book Bank
+                  Northgate Collegiate
                 </p>
                 <p className="mt-1 text-sm text-[#7a5b49]">
-                  Tolobat Ul Kulliyaat Ul Muminoon
+                  Library Services Portal
                 </p>
               </div>
             </div>
