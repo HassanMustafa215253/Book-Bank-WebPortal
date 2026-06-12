@@ -44,12 +44,13 @@ function AdminShell({ title, subtitle, headerAction, children }) {
             </button>
 
             <div className="flex items-center gap-3">
+              <img src="\src\assets\image copy.png" alt="Logo" className="h-10 w-30" />
               <div>
                 <p className="text-xl font-semibold leading-none tracking-[0.01em] text-[var(--text)]">
-                  Northgate Collegiate
+                   Tolobat Ul Kulliyaat Ul Muminoon
                 </p>
                 <p className="mt-1 text-sm text-[var(--text-muted)]">
-                  Library Services Portal
+                  Book Bank
                 </p>
               </div>
             </div>
@@ -94,7 +95,7 @@ function AdminShell({ title, subtitle, headerAction, children }) {
       <div className="mx-auto flex max-w-[1480px] items-start">
         <aside
           className={`sticky top-[74px] hidden h-[calc(100vh-74px)] shrink-0 overflow-y-auto border-r border-[var(--border)] bg-[var(--surface-strong)] transition-all duration-300 md:block ${
-            isSidebarOpen ? "w-[252px]" : "w-[96px]"
+            isSidebarOpen ? "w-[210px]" : "w-[96px]"
           }`}
         >
           <nav className="flex min-h-full flex-col gap-2 px-3 py-6">

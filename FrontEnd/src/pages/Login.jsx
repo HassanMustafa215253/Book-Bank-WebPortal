@@ -33,10 +33,10 @@ function Login() {
       <header className="relative z-10 flex items-center gap-4 px-6 pt-8 sm:px-10">
         <div>
           <h1 className="text-lg font-semibold tracking-[0.01em] text-[var(--text)]">
-            Northgate Collegiate
+            Tolobat Ul Kulliyaat Ul Muminoon
           </h1>
           <p className="text-sm text-[var(--text-muted)]">
-            Book Bank Management System
+            Book Bank
           </p>
         </div>
       </header>
