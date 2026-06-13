@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AdminShell from "../components/AdminShell";
 
+
 const initialBooks = [
   {
     id: 1,
@@ -118,6 +119,8 @@ function Inventory() {
     </button>
   );
 
+
+
   return (
     <AdminShell title="Inventory" headerAction={viewToggle}>
       {isInputMode ? (
@@ -225,22 +228,13 @@ function Inventory() {
                   <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{book.author}</td>
                   <td className="px-5 py-4 text-[var(--text-muted)] lg:px-7">{book.iban}</td>
                   <td className="px-5 py-4 lg:px-7">
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleEdit(book)}
-                        className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-white"
-                      >
-                        Update
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleRemove(book.id)}
-                        className="rounded-2xl border border-[rgba(166,61,53,0.22)] bg-[var(--danger-soft)] px-4 py-2 text-sm font-medium text-[var(--danger)] transition hover:bg-[#ffe7e5]"
-                      >
-                        Remove
-                      </button>
-                    </div>
+                  <button
+                    type="button"
+                    aria-label="Open receiver menu"
+                    className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-white"
+                  >
+                    ⋮
+                  </button>
                   </td>
                 </tr>
               ))}

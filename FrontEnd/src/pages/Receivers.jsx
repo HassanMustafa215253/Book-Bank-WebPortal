@@ -524,6 +524,7 @@ function Receivers() {
     <AdminShell title="Receivers" headerAction={viewToggle}>
       {isInputMode ? (
         <div className="border-b border-[var(--border)] bg-white px-5 py-6 lg:px-7">
+          
           <div className="mb-5 flex items-center justify-between gap-4">
             <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[var(--text)]">
               {editingId !== null ? "Update Receiver" : "Add Receiver"}
@@ -537,287 +538,274 @@ function Receivers() {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="grid gap-4 lg:grid-cols-2">
-            <div>
-              <label className="text-sm font-medium text-[var(--text)]" htmlFor="name">
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
-                placeholder="Enter receiver name"
-              />
+          <form onSubmit={handleSubmit} >
+            <div className="grid gap-4 lg:grid-cols-2">
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="name">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter receiver name"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="its">
+                  ITS
+                </label>
+                <input
+                  id="its"
+                  name="its"
+                  value={form.its}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter ITS number"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="phone">
+                  Phone Number
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter phone number"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="school">
+                  School
+                </label>
+                <input
+                  id="school"
+                  name="school"
+                  value={form.school}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter school name"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="className">
+                  Class
+                </label>
+                <input
+                  id="className"
+                  name="className"
+                  value={form.className}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter class"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="subject">
+                  Subject
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter subject"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-[var(--text)]" htmlFor="parentName">
+                  Parent Name
+                </label>
+                <input
+                  id="parentName"
+                  name="parentName"
+                  value={form.parentName}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
+                  placeholder="Enter parent name"
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="text-sm font-medium text-[var(--text)]" htmlFor="its">
-                ITS
-              </label>
-              <input
-                id="its"
-                name="its"
-                value={form.its}
-                onChange={handleChange}
-                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
-                placeholder="Enter ITS number"
-              />
-            </div>
+              <div className="mt-10 space-y-3 rounded-2xl border border-[var(--border)] bg-white p-4">
+                {inputActiveSection === "original" ? (
+                  <>
+                    <div className="flex w-full flex-wrap items-end gap-1 border-b border-[var(--border)] px-1">
+                      <SectionTabs active={inputActiveSection} onSelect={setInputActiveSection} />
+                    </div>
 
-            <div>
-              <label className="text-sm font-medium text-[var(--text)]" htmlFor="phone">
-                Phone Number
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
-                placeholder="Enter phone number"
-              />
-            </div>
+                    <div className="overflow-x-auto rounded-2xl border border-[var(--border)] bg-white">
+                      <table className="min-w-full border-collapse">
+                        <thead className="bg-[var(--surface-strong)]">
+                          <tr className="text-left text-sm text-[var(--text-muted)]">
+                            <th className="px-4 py-3 font-semibold">Title</th>
+                            <th className="px-4 py-3 font-semibold">Edition</th>
+                            <th className="px-4 py-3 font-semibold">Publisher</th>
+                            <th className="px-4 py-3 font-semibold">Author</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {inputMatchingBooks.length === 0 ? (
+                            <tr>
+                              <td
+                                colSpan="4"
+                                className="border-t border-[var(--border)] px-4 py-4 text-sm text-[var(--text-muted)]"
+                              >
+                                No course record found for this school and class.
+                              </td>
+                            </tr>
+                          ) : null}
 
-            <div>
-              <label className="text-sm font-medium text-[var(--text)]" htmlFor="school">
-                School
-              </label>
-              <input
-                id="school"
-                name="school"
-                value={form.school}
-                onChange={handleChange}
-                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
-                placeholder="Enter school name"
-              />
-            </div>
+                          {inputMatchingBooks.map((book) => (
+                            <tr
+                              key={book.id}
+                              className="border-t border-[var(--border)] even:bg-[var(--surface-muted)]"
+                            >
+                              <td className="px-4 py-3 font-medium text-[var(--text)]">{book.title}</td>
+                              <td className="px-4 py-3 text-[var(--text-muted)]">{book.edition || "-"}</td>
+                              <td className="px-4 py-3 text-[var(--text-muted)]">{book.publisher || "-"}</td>
+                              <td className="px-4 py-3 text-[var(--text-muted)]">{book.author || "-"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                ) : null}
 
-            <div>
-              <label className="text-sm font-medium text-[var(--text)]" htmlFor="className">
-                Class
-              </label>
-              <input
-                id="className"
-                name="className"
-                value={form.className}
-                onChange={handleChange}
-                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
-                placeholder="Enter class"
-              />
-            </div>
+                {inputActiveSection === "extra" || inputActiveSection === "excluded" ? (
+                  <>
+                    <div className="flex w-full items-end justify-between gap-3 border-b border-[var(--border)] px-1">
+                      <div className="flex flex-wrap items-end gap-1">
+                        <SectionTabs active={inputActiveSection} onSelect={setInputActiveSection} />
+                      </div>
+                    </div>
 
-            <div>
-              <label className="text-sm font-medium text-[var(--text)]" htmlFor="subject">
-                Subject
-              </label>
-              <input
-                id="subject"
-                name="subject"
-                value={form.subject}
-                onChange={handleChange}
-                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
-                placeholder="Enter subject"
-              />
-            </div>
+                    <div className="overflow-x-auto rounded-2xl border border-[var(--border)] bg-white">
+                      <table className="min-w-full border-collapse">
+                        <thead className="bg-[var(--surface-strong)]">
+                          <tr className="text-left text-sm text-[var(--text-muted)]">
+                            <th className="px-4 py-3 font-semibold">Title</th>
+                            <th className="px-4 py-3 font-semibold">Edition</th>
+                            <th className="px-4 py-3 font-semibold">Publisher</th>
+                            <th className="px-4 py-3 font-semibold">Author</th>
+                            <th className="px-4 py-3 font-semibold">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(inputActiveSection === "extra" ? inputExtraBooks : inputExcludedBooks).length === 0 ? (
+                            <tr>
+                              <td
+                                colSpan="5"
+                                className="border-t border-[var(--border)] px-4 py-4 text-sm text-[var(--text-muted)]"
+                              >
+                                {sectionConfig[inputActiveSection].emptyMessage}
+                              </td>
+                            </tr>
+                          ) : null}
 
-            <div>
-              <label className="text-sm font-medium text-[var(--text)]" htmlFor="parentName">
-                Parent Name
-              </label>
-              <input
-                id="parentName"
-                name="parentName"
-                value={form.parentName}
-                onChange={handleChange}
-                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 outline-none transition focus:border-[var(--primary)] focus:bg-white"
-                placeholder="Enter parent name"
-              />
-            </div>
+                          {(inputActiveSection === "extra" ? inputExtraBooks : inputExcludedBooks).map((book) => (
+                            <tr
+                              key={book.id}
+                              className="border-t border-[var(--border)] even:bg-[var(--surface-muted)]"
+                            >
+                              <td className="px-4 py-3 font-medium text-[var(--text)]">{book.title}</td>
+                              <td className="px-4 py-3 text-[var(--text-muted)]">{book.edition || "-"}</td>
+                              <td className="px-4 py-3 text-[var(--text-muted)]">{book.publisher || "-"}</td>
+                              <td className="px-4 py-3 text-[var(--text-muted)]">{book.author || "-"}</td>
+                              <td className="px-4 py-3">
+                                <button
+                                  type="button"
+                                  onClick={() => removeInputBook(inputActiveSection, book.id)}
+                                  className="rounded-2xl border border-[rgba(166,61,53,0.22)] bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)] transition hover:bg-[#ffe7e5]"
+                                >
+                                  Remove
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                            <tr className="border-t border-[var(--border)] bg-[var(--surface-muted)] align-middle">
+                              <td className="px-4 py-3">
+                                <input
+                                  value={inputDraft.title}
+                                  onChange={(event) =>
+                                    updateDraft(inputReceiverKey, inputDraftSection, "title", event.target.value)
+                                  }
+                                  className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
+                                  placeholder="Title"
+                                />
+                              </td>
+                              <td className="px-4 py-3">
+                                <input
+                                  value={inputDraft.edition}
+                                  onChange={(event) =>
+                                    updateDraft(inputReceiverKey, inputDraftSection, "edition", event.target.value)
+                                  }
+                                  className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
+                                  placeholder="Edition"
+                                />
+                              </td>
+                              <td className="px-4 py-3">
+                                <input
+                                  value={inputDraft.publisher}
+                                  onChange={(event) =>
+                                    updateDraft(inputReceiverKey, inputDraftSection, "publisher", event.target.value)
+                                  }
+                                  className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
+                                  placeholder="Publisher"
+                                />
+                              </td>
+                              <td className="px-4 py-3">
+                                <input
+                                  value={inputDraft.author}
+                                  onChange={(event) =>
+                                    updateDraft(inputReceiverKey, inputDraftSection, "author", event.target.value)
+                                  }
+                                  className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
+                                  placeholder="Author"
+                                />
+                              </td>
+                              <td className="px-4 py-3">
+                                <button
+                                  type="button"
+                                  onClick={(event) => addInputBook(inputActiveSection, event)}
+                                  className="rounded-2xl bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-strong)]"
+                                >
+                                  Add
+                                </button>
+                              </td>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                ) : null}
+              </div>
 
-            <div className="lg:col-span-2 flex justify-end">
-              <button
-                type="submit"
-                className="rounded-2xl bg-[var(--primary)] px-6 py-3 text-sm font-medium text-white transition hover:bg-[var(--primary-strong)]"
-              >
-                {editingId !== null ? "Save Changes" : "Add Receiver"}
-              </button>
-            </div>
+              <div className="lg:col-span-2 flex justify-end mt-10">
+                <button
+                  type="submit"
+                  className="rounded-2xl bg-[var(--primary)] px-6 py-3 text-lg font-medium text-white transition hover:bg-[var(--primary-strong)]"
+                >
+                  {editingId !== null ? "Save Changes" : "Add Receiver"}
+                </button>
+              </div>
+
           </form>
 
-          <div className="mt-6 space-y-3 rounded-2xl border border-[var(--border)] bg-white p-4">
-            {inputActiveSection === "original" ? (
-              <>
-                <div className="flex w-full flex-wrap items-end gap-1 border-b border-[var(--border)] px-1">
-                  <SectionTabs active={inputActiveSection} onSelect={setInputActiveSection} />
-                </div>
-
-                <div className="overflow-x-auto rounded-2xl border border-[var(--border)] bg-white">
-                  <table className="min-w-full border-collapse">
-                    <thead className="bg-[var(--surface-strong)]">
-                      <tr className="text-left text-sm text-[var(--text-muted)]">
-                        <th className="px-4 py-3 font-semibold">Title</th>
-                        <th className="px-4 py-3 font-semibold">Edition</th>
-                        <th className="px-4 py-3 font-semibold">Publisher</th>
-                        <th className="px-4 py-3 font-semibold">Author</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {inputMatchingBooks.length === 0 ? (
-                        <tr>
-                          <td
-                            colSpan="4"
-                            className="border-t border-[var(--border)] px-4 py-4 text-sm text-[var(--text-muted)]"
-                          >
-                            No course record found for this school and class.
-                          </td>
-                        </tr>
-                      ) : null}
-
-                      {inputMatchingBooks.map((book) => (
-                        <tr
-                          key={book.id}
-                          className="border-t border-[var(--border)] even:bg-[var(--surface-muted)]"
-                        >
-                          <td className="px-4 py-3 font-medium text-[var(--text)]">{book.title}</td>
-                          <td className="px-4 py-3 text-[var(--text-muted)]">{book.edition || "-"}</td>
-                          <td className="px-4 py-3 text-[var(--text-muted)]">{book.publisher || "-"}</td>
-                          <td className="px-4 py-3 text-[var(--text-muted)]">{book.author || "-"}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            ) : null}
-
-            {inputActiveSection === "extra" || inputActiveSection === "excluded" ? (
-              <>
-                <div className="flex w-full items-end justify-between gap-3 border-b border-[var(--border)] px-1">
-                  <div className="flex flex-wrap items-end gap-1">
-                    <SectionTabs active={inputActiveSection} onSelect={setInputActiveSection} />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setBookFormOpen(
-                        inputReceiverKey,
-                        inputActiveSection,
-                        !isBookFormOpen(inputReceiverKey, inputActiveSection)
-                      )
-                    }
-                    className="mb-1 rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-white"
-                  >
-                    {inputShowAddRow
-                      ? "Cancel"
-                      : `Add ${inputActiveSection === "extra" ? "Extra" : "Excluded"} Book`}
-                  </button>
-                </div>
-
-                <div className="overflow-x-auto rounded-2xl border border-[var(--border)] bg-white">
-                  <table className="min-w-full border-collapse">
-                    <thead className="bg-[var(--surface-strong)]">
-                      <tr className="text-left text-sm text-[var(--text-muted)]">
-                        <th className="px-4 py-3 font-semibold">Title</th>
-                        <th className="px-4 py-3 font-semibold">Edition</th>
-                        <th className="px-4 py-3 font-semibold">Publisher</th>
-                        <th className="px-4 py-3 font-semibold">Author</th>
-                        <th className="px-4 py-3 font-semibold">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(inputActiveSection === "extra" ? inputExtraBooks : inputExcludedBooks).length === 0 ? (
-                        <tr>
-                          <td
-                            colSpan="5"
-                            className="border-t border-[var(--border)] px-4 py-4 text-sm text-[var(--text-muted)]"
-                          >
-                            {sectionConfig[inputActiveSection].emptyMessage}
-                          </td>
-                        </tr>
-                      ) : null}
-
-                      {(inputActiveSection === "extra" ? inputExtraBooks : inputExcludedBooks).map((book) => (
-                        <tr
-                          key={book.id}
-                          className="border-t border-[var(--border)] even:bg-[var(--surface-muted)]"
-                        >
-                          <td className="px-4 py-3 font-medium text-[var(--text)]">{book.title}</td>
-                          <td className="px-4 py-3 text-[var(--text-muted)]">{book.edition || "-"}</td>
-                          <td className="px-4 py-3 text-[var(--text-muted)]">{book.publisher || "-"}</td>
-                          <td className="px-4 py-3 text-[var(--text-muted)]">{book.author || "-"}</td>
-                          <td className="px-4 py-3">
-                            <button
-                              type="button"
-                              onClick={() => removeInputBook(inputActiveSection, book.id)}
-                              className="rounded-2xl border border-[rgba(166,61,53,0.22)] bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)] transition hover:bg-[#ffe7e5]"
-                            >
-                              Remove
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-
-                      {inputShowAddRow ? (
-                        <tr className="border-t border-[var(--border)] bg-[var(--surface-muted)] align-middle">
-                          <td className="px-4 py-3">
-                            <input
-                              value={inputDraft.title}
-                              onChange={(event) =>
-                                updateDraft(inputReceiverKey, inputDraftSection, "title", event.target.value)
-                              }
-                              className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                              placeholder="Title"
-                            />
-                          </td>
-                          <td className="px-4 py-3">
-                            <input
-                              value={inputDraft.edition}
-                              onChange={(event) =>
-                                updateDraft(inputReceiverKey, inputDraftSection, "edition", event.target.value)
-                              }
-                              className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                              placeholder="Edition"
-                            />
-                          </td>
-                          <td className="px-4 py-3">
-                            <input
-                              value={inputDraft.publisher}
-                              onChange={(event) =>
-                                updateDraft(inputReceiverKey, inputDraftSection, "publisher", event.target.value)
-                              }
-                              className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                              placeholder="Publisher"
-                            />
-                          </td>
-                          <td className="px-4 py-3">
-                            <input
-                              value={inputDraft.author}
-                              onChange={(event) =>
-                                updateDraft(inputReceiverKey, inputDraftSection, "author", event.target.value)
-                              }
-                              className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                              placeholder="Author"
-                            />
-                          </td>
-                          <td className="px-4 py-3">
-                            <button
-                              type="button"
-                              onClick={(event) => addInputBook(inputActiveSection, event)}
-                              className="rounded-2xl bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-strong)]"
-                            >
-                              Add
-                            </button>
-                          </td>
-                        </tr>
-                      ) : null}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            ) : null}
-          </div>
+          
         </div>
       ) : (
         <div className="relative overflow-x-auto bg-white">
@@ -968,21 +956,6 @@ function Receivers() {
                                           onSelect={(section) => openSection(receiver.id, section)}
                                         />
                                       </div>
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          setBookFormOpen(
-                                            receiver.id,
-                                            activeSection,
-                                            !isBookFormOpen(receiver.id, activeSection)
-                                          )
-                                        }
-                                        className="mb-1 rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-white"
-                                      >
-                                        {showAddRow
-                                          ? "Cancel"
-                                          : `Add ${activeSection === "extra" ? "Extra" : "Excluded"} Book`}
-                                      </button>
                                     </div>
 
                                 <div className="overflow-x-auto rounded-2xl border border-[var(--border)] bg-white">
@@ -993,7 +966,7 @@ function Receivers() {
                                         <th className="px-4 py-3 font-semibold">Edition</th>
                                         <th className="px-4 py-3 font-semibold">Publisher</th>
                                         <th className="px-4 py-3 font-semibold">Author</th>
-                                        <th className="px-4 py-3 font-semibold">Action</th>
+                                        <th className="px-4 py-3 font-semibold">Cost</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -1017,91 +990,10 @@ function Receivers() {
                                           <td className="px-4 py-3 text-[var(--text-muted)]">{book.edition || "-"}</td>
                                           <td className="px-4 py-3 text-[var(--text-muted)]">{book.publisher || "-"}</td>
                                           <td className="px-4 py-3 text-[var(--text-muted)]">{book.author || "-"}</td>
-                                          <td className="px-4 py-3">
-                                            <button
-                                              type="button"
-                                              onClick={() => removeBook(receiver.id, activeSection, book.id)}
-                                              className="rounded-2xl border border-[rgba(166,61,53,0.22)] bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)] transition hover:bg-[#ffe7e5]"
-                                            >
-                                              Remove
-                                            </button>
-                                          </td>
+                                          <td className="px-4 py-3 text-[var(--text-muted)]">{book.cost || "-"}</td>
+
                                         </tr>
                                       ))}
-
-                                      {showAddRow ? (
-                                      <tr className="border-t border-[var(--border)] bg-[var(--surface-muted)] align-middle">
-                                        <td className="px-4 py-3">
-                                          <input
-                                            value={draft.title}
-                                            onChange={(event) =>
-                                              updateDraft(
-                                                receiver.id,
-                                                draftSection,
-                                                "title",
-                                                event.target.value
-                                              )
-                                            }
-                                            className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                                            placeholder="Title"
-                                          />
-                                        </td>
-                                        <td className="px-4 py-3">
-                                          <input
-                                            value={draft.edition}
-                                            onChange={(event) =>
-                                              updateDraft(
-                                                receiver.id,
-                                                draftSection,
-                                                "edition",
-                                                event.target.value
-                                              )
-                                            }
-                                            className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                                            placeholder="Edition"
-                                          />
-                                        </td>
-                                        <td className="px-4 py-3">
-                                          <input
-                                            value={draft.publisher}
-                                            onChange={(event) =>
-                                              updateDraft(
-                                                receiver.id,
-                                                draftSection,
-                                                "publisher",
-                                                event.target.value
-                                              )
-                                            }
-                                            className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                                            placeholder="Publisher"
-                                          />
-                                        </td>
-                                        <td className="px-4 py-3">
-                                          <input
-                                            value={draft.author}
-                                            onChange={(event) =>
-                                              updateDraft(
-                                                receiver.id,
-                                                draftSection,
-                                                "author",
-                                                event.target.value
-                                              )
-                                            }
-                                            className="w-full rounded-2xl border border-[var(--border)] bg-white px-3 py-2 outline-none transition focus:border-[var(--primary)]"
-                                            placeholder="Author"
-                                          />
-                                        </td>
-                                        <td className="px-4 py-3">
-                                          <button
-                                            type="button"
-                                            onClick={(event) => addBook(receiver.id, activeSection, event)}
-                                            className="rounded-2xl bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-strong)]"
-                                          >
-                                            Add
-                                          </button>
-                                        </td>
-                                      </tr>
-                                      ) : null}
                                     </tbody>
                                   </table>
                                 </div>
